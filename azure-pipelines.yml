@@ -8,11 +8,11 @@ trigger:
 
 
 stages:
-  - stage: "Build stage"
-    displayName: "build state"
+  - stage: "Build-stage"
+    displayName: "build-state"
     jobs:
       - job: 
-        displayName: "build job"
+        displayName: "build-job"
         pool: Default
         steps:
           - task: Maven@4
@@ -29,7 +29,7 @@ stages:
 
           
   - stage: "dev"
-    displayName: "dev state"
+    displayName: "dev-state"
     jobs:
       - job: "deploy"
         pool: Default
