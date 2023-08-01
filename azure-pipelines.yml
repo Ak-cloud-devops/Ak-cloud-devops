@@ -13,8 +13,7 @@ stages:
     jobs:
       - job: 
         displayName: "build job"
-        pool:
-          vmImage: ubuntu-latest
+        pool: Default
         steps:
           - task: Maven@4
             inputs:
@@ -33,7 +32,7 @@ stages:
     displayName: "dev state"
     jobs:
       - job: "deploy"
-        pool: ubuntu-latest
+        pool: Default
         steps:
         - task: DownloadBuildArtifacts@1
           inputs:
