@@ -48,3 +48,12 @@ stages:
   displayName: Deploy stage
   dependsOn: Build
   condition: succeeded()
+  jobs:
+    - job: 
+      pool: $(pool_name)
+      steps:
+        - task: CmdLine@2
+          inputs:
+            script: |
+              echo Hello world
+        
