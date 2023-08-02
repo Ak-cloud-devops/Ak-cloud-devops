@@ -38,6 +38,11 @@ stages:
           # Put one key=value per line, example:
           # sonar.exclusions=**/*.bin
           sonar.projectKey=p1_p1
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: '$params = "$env:SONARQUBE_SCANNER_PARAMS" -replace '"sonar.branch.name":"[\w,/,-]*"\,?'
+Write-Host "##vso[task.setvariable variable=SONARQUBE_SCANNER_PARAMS]$params"'
     - task: Maven@4
       inputs:
         mavenPomFile: 'pom.xml'
