@@ -8,13 +8,12 @@ trigger:
 
 
 stages:
-  - stage: "Build stage"
-    displayName: "build state"
+  - stage: "Build_stage"
+    displayName: "build_state"
     jobs:
       - job: 
-        displayName: "build job"
-        pool:
-          vmImage: ubuntu-latest
+        displayName: "build_job"
+        pool: Default
         steps:
           - task: Maven@4
             inputs:
@@ -30,10 +29,10 @@ stages:
 
           
   - stage: "dev"
-    displayName: "dev state"
+    displayName: "dev_state"
     jobs:
       - job: "deploy"
-        pool: ubuntu-latest
+        pool: Default
         steps:
         - task: DownloadBuildArtifacts@1
           inputs:
