@@ -29,10 +29,26 @@ stages:
     pool: $(pool_name)
 
     steps:
-    - task: Maven@3
-      displayName: 'Maven Package'
+    - task: SonarQubePrepare@5
+      inputs:
+        SonarQube: 'sonar-connection'
+        scannerMode: 'Other'
+        extraProperties: |
+          # Additional properties that will be passed to the scanner, 
+          # Put one key=value per line, example:
+          # sonar.exclusions=**/*.bin
+          sonar.projectKey=p1_p1
+    - task: Maven@4
       inputs:
         mavenPomFile: 'pom.xml'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: true
+        sqMavenPluginVersionChoice: 'latest'
 
     - task: CopyFiles@2
       displayName: 'Copy Files to artifact staging directory'
@@ -43,6 +59,9 @@ stages:
 
     - upload: $(Build.ArtifactStagingDirectory)
       artifact: drop
+    - task: SonarQubePublish@5
+      inputs:
+        pollingTimeoutSec: '500'
 
 - stage: Deploy
   displayName: Deploy stage
